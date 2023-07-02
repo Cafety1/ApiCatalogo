@@ -1,6 +1,8 @@
 using ApiCatalogo.Extensions;
 using ApiCatalogo.Repository;
 using System.Text.Json.Serialization;
+using Microsoft.AspNet.OData;
+using ApiCatalogo.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.AddPersistence();
 builder.Services.AddScoped<IUnitofWork, UnitOfWork>();
 builder.AddMapper();
 builder.Services.AddCors();
+
 builder.AddIdentity();
 builder.AddToken();
 builder.AddVersion();
@@ -21,6 +24,7 @@ var app = builder.Build();
 
 var environment = app.Environment;
 app.UseExceptionHandling(environment);
+app.UseMiddleware<TesteGraphQLMiddleware>();
 
 app.UseHttpsRedirection();
 
